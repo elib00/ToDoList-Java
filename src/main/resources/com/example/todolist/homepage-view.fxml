@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400"
+            prefWidth="600"
+            fx:controller="com.example.todolist.HomePageController">
+
+    <!-- Side Tab -->
+    <left>
+        <VBox spacing="10" alignment="CENTER" prefWidth="200" style="-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;">
+            <VBox spacing="10" prefHeight="50" prefWidth="200" style="-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <Label fx:id="currentUserUName"/>
+                <Label fx:id="currentUserEmail"/>
+            </VBox>
+            <VBox spacing="10" prefWidth="200" alignment="CENTER" style="-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;"
+            VBox.vgrow="ALWAYS">
+                <Button fx:id="editProfileButton" text="Edit Profile" onAction="#handleEditProfile"/>
+                <Button fx:id="logoutButton" text="Log Out" onAction="#handleLogout"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <center>
+
+    </center>
+
+    <right>
+        <ScrollPane prefWidth="200" prefHeight="200">
+            <!-- Content to be scrolled -->
+            <VBox fx:id="tasksContainer">
+            </VBox>
+        </ScrollPane>
+    </right>
+
+</BorderPane>
+

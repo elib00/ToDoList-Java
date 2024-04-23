@@ -1,24 +1,18 @@
 package com.example.todolist;
 
-import com.example.todolist.Server.CreateNewUser;
-import com.example.todolist.Server.DeleteUser;
+import com.example.todolist.Server.DatabaseManager;
 import com.example.todolist.Server.Status;
-import com.example.todolist.Server.UpdateUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Objects;
 
 public class EditProfileController {
     private static Stage prevStage;
@@ -44,8 +38,7 @@ public class EditProfileController {
 
     @FXML
     private void handleDeleteUser(ActionEvent event) throws IOException {
-        DeleteUser userDeleter = DeleteUser.getInstance();
-        Status res = userDeleter.deleteUser(CurrentUser.userID);
+        Status res = DatabaseManager.getInstance().deleteUser(CurrentUser.userID);
 
         Alert alert = new Alert(Alert.AlertType.NONE);
         alert.setTitle("Login Status");
@@ -129,7 +122,6 @@ public class EditProfileController {
     }
 
     private Status processUpdate(String field, String value){
-        UpdateUser updater = UpdateUser.getInstance();
-        return updater.updateUser(field, value, CurrentUser.userID);
+        return DatabaseManager.getInstance().updateUser(field, value, CurrentUser.userID);
     }
 }

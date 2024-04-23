@@ -1,7 +1,7 @@
 package com.example.todolist;
 
+import com.example.todolist.Server.DatabaseManager;
 import com.example.todolist.Server.Status;
-import com.example.todolist.Server.CreateNewUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,9 +66,7 @@ public class RegisterController {
         String username = registerUsernameField.getText();
         String password = registerPasswordField.getText();
         String email = registerEmailField.getText();
-
-        CreateNewUser userCreator = CreateNewUser.getInstance();
-        return userCreator.createUser(username, email, password);
+        return DatabaseManager.getInstance().createUser(username, email, password);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.example.todolist;
 
+import com.example.todolist.Server.DatabaseManager;
 import com.example.todolist.Server.Status;
-import com.example.todolist.Server.ValidateLogin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Objects;
 
 public class LogInController {
@@ -65,8 +64,7 @@ public class LogInController {
     private Status validateCredentials(){
         String username = loginUsernameField.getText();
         String password = loginPasswordField.getText();
-        ValidateLogin validator = ValidateLogin.getInstance();
-        return validator.validate(username, password);
+        return DatabaseManager.getInstance().validate(username, password);
     }
 
     @FXML

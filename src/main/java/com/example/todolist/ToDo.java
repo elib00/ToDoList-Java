@@ -1,6 +1,6 @@
 package com.example.todolist;
 
-import com.example.todolist.Server.CreateDatabase;
+import com.example.todolist.Server.DatabaseManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,19 +10,17 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class ToDo extends Application {
-    CreateDatabase databaseCreator = new CreateDatabase();
-
     @Override
     public void start(Stage stage) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(ToDo.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Log In");
         stage.setScene(scene);
-        databaseCreator.initializeDB();
+        DatabaseManager.getInstance().initializeDB();
         stage.show();
     }
 
     public static void main(String[] args) {
         launch();
     }
-}\
+}

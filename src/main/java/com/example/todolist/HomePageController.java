@@ -1,8 +1,6 @@
 package com.example.todolist;
 
-import com.example.todolist.Server.CreateNewUser;
 import com.example.todolist.Server.DatabaseManager;
-import com.example.todolist.Server.GetTasks;
 import com.example.todolist.Server.Status;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,8 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -49,24 +45,24 @@ public class HomePageController {
 
     @FXML
     private void displayUserTasks() throws IOException {
-        tasksContainer.getChildren().clear();
-        GetTasks taskGetter = new GetTasks();
-        List<Map<String, String>> tasks = taskGetter.getTasks();
+        tasksContainer.getChildren().clear(); // empty the container first before generating
+
+        List<Map<String, String>> tasks = DatabaseManager.getInstance().getTasks();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
 
         boolean hasTasks = false;
 
-        for(Map<String, String> mp : tasks){
+        for(int i = tasks.size() - 1; i >= 0; i--){
             hasTasks = true;
             FXMLLoader taskLoader = new FXMLLoader(getClass().getResource("task-card.fxml"));
             VBox taskCard = taskLoader.load();
 
             TaskCardController taskController = taskLoader.getController();
 
-            String taskTitle = mp.get("task_title");
-            String taskContent = mp.get("task_content");
+            String taskTitle = tasks.get(i).get("task_title");
+            String taskContent = tasks.get(i).get("task_content");
 
             taskController.setTaskCardValues(taskTitle, taskContent);
 

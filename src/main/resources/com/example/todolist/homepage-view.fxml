@@ -32,13 +32,26 @@
     </left>
 
     <center>
+        <GridPane hgap="10" vgap="10" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField fx:id="taskCardTitleField" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
+            <Label text="Content:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <TextField fx:id="taskCardContentField" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
+            <Button fx:id="createTaskButton" text="Create Task" onAction="#createTask"  GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <Button fx:id="displayTasksButton" text="Display Tasks" onAction="#displayUserTasks"  GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+        </GridPane>
     </center>
 
     <right>
-        <ScrollPane prefWidth="200" prefHeight="200">
+        <ScrollPane vbarPolicy="ALWAYS" prefWidth="200" prefHeight="200">
             <!-- Content to be scrolled -->
-            <VBox fx:id="tasksContainer">
+            <VBox fx:id="tasksContainer" VBox.vgrow="ALWAYS">
+
             </VBox>
         </ScrollPane>
     </right>

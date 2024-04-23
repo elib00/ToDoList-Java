@@ -19,7 +19,8 @@
         <PasswordField fx:id="registerPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
     </GridPane>
 
-    <HBox spacing="10" alignment="CENTER">
+    <VBox spacing="10" alignment="CENTER">
         <Button text="Create Account" fx:id="createAccountButton" onAction="#handleCreateAccount"/>
-    </HBox>
+        <Button text="Return " fx:id="returnToLoginButton" onAction="#handleReturnToLogin"/>
+    </VBox>
 </VBox>

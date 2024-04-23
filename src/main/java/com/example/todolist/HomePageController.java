@@ -1,16 +1,27 @@
 package com.example.todolist;
 
+import com.example.todolist.Server.CreateNewUser;
+import com.example.todolist.Server.DatabaseManager;
+import com.example.todolist.Server.GetTasks;
+import com.example.todolist.Server.Status;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class HomePageController {
@@ -18,10 +29,76 @@ public class HomePageController {
     private Label currentUserUName;
     @FXML
     private Label currentUserEmail;
+    @FXML
+    private VBox tasksContainer;
+    @FXML
+    private Button createTaskButton;
+    @FXML private TextField taskCardTitleField;
+    @FXML private TextField taskCardContentField;
 
-    public void setPageValues(){
+    public void setPageValues() {
         currentUserUName.setText(CurrentUser.username);
         currentUserEmail.setText(CurrentUser.email);
+
+        try{
+            displayUserTasks();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void displayUserTasks() throws IOException {
+        tasksContainer.getChildren().clear();
+        GetTasks taskGetter = new GetTasks();
+        List<Map<String, String>> tasks = taskGetter.getTasks();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+
+        boolean hasTasks = false;
+
+        for(Map<String, String> mp : tasks){
+            hasTasks = true;
+            FXMLLoader taskLoader = new FXMLLoader(getClass().getResource("task-card.fxml"));
+            VBox taskCard = taskLoader.load();
+
+            TaskCardController taskController = taskLoader.getController();
+
+            String taskTitle = mp.get("task_title");
+            String taskContent = mp.get("task_content");
+
+            taskController.setTaskCardValues(taskTitle, taskContent);
+
+            tasksContainer.getChildren().add(taskCard);
+        }
+
+        if(!hasTasks){
+            alert.setContentText(CurrentUser.username + " has no tasks. #WINNING!");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void createTask() throws IOException {
+        String title = taskCardTitleField.getText();
+        String content = taskCardContentField.getText();
+        DatabaseManager dbManager = DatabaseManager.getInstance();
+        Status res = dbManager.createTask(title, content, CurrentUser.userID);
+
+        Alert alert = new Alert(Alert.AlertType.NONE);
+
+        if(res == Status.TASK_CREATED_SUCCESSFULLY){
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setContentText("Task created successfully!");
+        }else{
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setContentText("Task creation unsuccessful. Please try again.");
+        }
+
+        alert.setHeaderText(null);
+        alert.showAndWait();
+        displayUserTasks();
     }
 
     @FXML

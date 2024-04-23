@@ -14,7 +14,7 @@ public class ToDo extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ToDo.class.getResource("task-card.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ToDo.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Log In");
         stage.setScene(scene);
@@ -25,4 +25,4 @@ public class ToDo extends Application {
     public static void main(String[] args) {
         launch();
     }
-}
+}\

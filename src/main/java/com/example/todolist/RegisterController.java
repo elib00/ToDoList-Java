@@ -28,6 +28,15 @@ public class RegisterController {
     private TextField registerEmailField;
 
     @FXML
+    private void handleReturnToLogin(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login-view.fxml")));
+        Stage currStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currStage.setTitle("Log In");
+        currStage.setScene(new Scene(root));
+        currStage.show();
+    }
+
+    @FXML
     private void handleCreateAccount(ActionEvent event) throws IOException {
         Status res = create();
         Alert alert = new Alert(Alert.AlertType.NONE);

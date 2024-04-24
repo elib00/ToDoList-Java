@@ -44,7 +44,7 @@ public class HomePageController {
     }
 
     @FXML
-    private void displayUserTasks() throws IOException {
+    public void displayUserTasks() throws IOException {
         tasksContainer.getChildren().clear(); // empty the container first before generating
 
         List<Map<String, String>> tasks = DatabaseManager.getInstance().getTasks();
@@ -52,10 +52,7 @@ public class HomePageController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
 
-        boolean hasTasks = false;
-
         for(int i = tasks.size() - 1; i >= 0; i--){
-            hasTasks = true;
             FXMLLoader taskLoader = new FXMLLoader(getClass().getResource("task-card.fxml"));
             VBox taskCard = taskLoader.load();
 
@@ -63,15 +60,11 @@ public class HomePageController {
 
             String taskTitle = tasks.get(i).get("task_title");
             String taskContent = tasks.get(i).get("task_content");
+            String taskID = tasks.get(i).get("task_id");
 
-            taskController.setTaskCardValues(taskTitle, taskContent);
+            taskController.setTaskCardValues(taskTitle, taskContent, Integer.parseInt(taskID));
 
             tasksContainer.getChildren().add(taskCard);
-        }
-
-        if(!hasTasks){
-            alert.setContentText(CurrentUser.username + " has no tasks. #WINNING!");
-            alert.showAndWait();
         }
     }
 

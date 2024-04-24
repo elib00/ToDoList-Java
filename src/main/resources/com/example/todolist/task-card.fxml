@@ -13,7 +13,7 @@
     <Label fx:id="taskCardContent"/>
 
     <HBox spacing="5" alignment="CENTER">
-        <Button text="Edit"/>
-        <Button text="Delete"/>
+        <Button fx:id="ediTaskButton" onAction="#handleEditTask" text="Edit"/>
+        <Button fx:id="deleteTaskButton" onAction="#handleDeleteTask" text="Delete"/>
     </HBox>
 </VBox>

@@ -27,7 +27,7 @@ public class DatabaseManager {
             String createDBQuery  = "CREATE DATABASE IF NOT EXISTS dbnapinas;";
             statement.executeUpdate(createDBQuery);
 
-            connection.setCatalog("dbnapinas");
+            connection.setCatalog("dbnapinas"); //toggle to the created db
             connection.setAutoCommit(false);
             statement = connection.createStatement();
 
@@ -198,7 +198,6 @@ public class DatabaseManager {
                 temp.put("user_id", res.getString("user_id"));
                 temp.put("task_title", res.getString("task_title"));
                 temp.put("task_content", res.getString("task_content"));
-
                 tasks.add(temp);
             }
 
@@ -210,5 +209,24 @@ public class DatabaseManager {
         }
 
         return null;
+    }
+
+    public Status deleteTask(int taskID){
+        try(Connection c = MySQLConnection.getConnection("dbnapinas");
+            PreparedStatement statement = c.prepareStatement("DELETE FROM task WHERE task_id = ?")){
+
+            statement.setInt(1, taskID);
+            int res = statement.executeUpdate();
+
+            if(res == 0){
+                return Status.TASK_DELETION_FAILED;
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            return Status.TASK_DELETION_FAILED;
+        }
+
+        return Status.TASK_DELETED_SUCCESSFULLY;
     }
 }

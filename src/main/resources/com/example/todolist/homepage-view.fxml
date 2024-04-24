@@ -1,54 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            prefHeight="400"
-            prefWidth="600"
-            fx:controller="com.example.todolist.HomePageController">
+<BorderPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.todolist.HomePageController">
 
     <!-- Side Tab -->
     <left>
-        <VBox spacing="10" alignment="CENTER" prefWidth="200" style="-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;">
-            <VBox spacing="10" prefHeight="50" prefWidth="200" style="-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;">
+        <VBox alignment="CENTER" prefWidth="120" spacing="10">
+            <VBox prefHeight="50" spacing="10">
                 <padding>
-                    <Insets top="10" right="10" bottom="10" left="10"/>
+                    <Insets bottom="10" left="10" right="10" top="10" />
                 </padding>
-                <Label fx:id="currentUserUName"/>
-                <Label fx:id="currentUserEmail"/>
+                <Label fx:id="currentUserUName" />
+                <Label fx:id="currentUserEmail" />
             </VBox>
-            <VBox spacing="10" prefWidth="200" alignment="CENTER" style="-fx-border-color: black; -fx-border-width: 1px; -fx-border-style: solid;"
-            VBox.vgrow="ALWAYS">
-                <Button fx:id="editProfileButton" text="Edit Profile" onAction="#handleEditProfile"/>
-                <Button fx:id="logoutButton" text="Log Out" onAction="#handleLogout"/>
+            <VBox alignment="CENTER" prefWidth="200" spacing="10" VBox.vgrow="ALWAYS">
+                <Button fx:id="editProfileButton" onAction="#handleEditProfile" text="Edit Profile" />
+                <Button fx:id="logoutButton" onAction="#handleLogout" text="Log Out" />
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+            <padding>
+               <Insets top="10.0" />
+            </padding>
             </VBox>
         </VBox>
     </left>
 
     <center>
-        <GridPane hgap="10" vgap="10" alignment="CENTER">
+        <GridPane alignment="CENTER" hgap="10" prefWidth="200" vgap="10">
             <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
+                <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <TextField fx:id="taskCardTitleField" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="taskCardTitleField" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-            <Label text="Content:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-            <TextField fx:id="taskCardContentField" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <Label text="Content:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextArea fx:id="taskCardContentField" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
-            <Button fx:id="createTaskButton" text="Create Task" onAction="#createTask"  GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-            <Button fx:id="displayTasksButton" text="Display Tasks" onAction="#displayUserTasks"  GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+            <HBox alignment="CENTER" spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                <Button fx:id="createTaskButton" onAction="#createTask" text="Create Task" />
+                <Button fx:id="displayTasksButton" onAction="#displayUserTasks" text="Display Tasks" />
+            </HBox>
+         <columnConstraints>
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+
         </GridPane>
     </center>
 
     <right>
-        <ScrollPane vbarPolicy="ALWAYS" prefWidth="200" prefHeight="200">
+        <ScrollPane prefHeight="200" prefWidth="200" vbarPolicy="ALWAYS">
             <!-- Content to be scrolled -->
             <VBox fx:id="tasksContainer" VBox.vgrow="ALWAYS">
 
@@ -57,4 +68,3 @@
     </right>
 
 </BorderPane>
-

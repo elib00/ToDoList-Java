@@ -1,6 +1,7 @@
 package com.example.todolist.Server;
 
 import com.example.todolist.CurrentUser;
+import com.example.todolist.TaskCardController;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -228,5 +229,56 @@ public class DatabaseManager {
         }
 
         return Status.TASK_DELETED_SUCCESSFULLY;
+    }
+
+    public Status editTask(String title, String content, int taskID, TaskCardController controller){
+        String editQuery = "UPDATE task SET ";
+        if (!title.isEmpty() && !content.isEmpty()) {
+            editQuery += "task_title = ?, task_content = ? ";
+        } else if (!title.isEmpty()) {
+            editQuery += "task_title = ? ";
+        } else {
+            editQuery += "task_content = ? ";
+        }
+
+        editQuery += "WHERE task_id = ?";
+
+        try (Connection c = MySQLConnection.getConnection("dbnapinas")) {
+            PreparedStatement statement = c.prepareStatement(editQuery);
+            int parameterIndex = 1;
+            if (!title.isEmpty()) {
+                statement.setString(parameterIndex++, title);
+            }
+            if (!content.isEmpty()) {
+                statement.setString(parameterIndex++, content);
+            }
+            statement.setInt(parameterIndex, taskID);
+
+            int res = statement.executeUpdate();
+
+            if (res == 0) {
+                return Status.TASK_EDIT_FAILED;
+            }
+
+            String getUpdatedTaskQuery = "SELECT * FROM task WHERE task_id = ?";
+            statement = c.prepareStatement(getUpdatedTaskQuery);
+            statement.setInt(1, taskID);
+
+            ResultSet updatedTask = statement.executeQuery();
+
+            if(updatedTask.next()){
+                String newTitle = updatedTask.getString("task_title");
+                String newContent = updatedTask.getString("task_content");
+                controller.setTaskCardValues(newTitle, newContent, taskID);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Status.TASK_EDIT_FAILED;
+        }
+
+
+        return Status.TASK_EDITED_SUCCESSFULLY;
     }
 }
